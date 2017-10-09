@@ -18,8 +18,8 @@ class Walker():
         pygame.draw.line(display,(255,255,255),(self.x, self.y),(self.x, self.y))
 
     def step(self):
-        step_x = randint(-1, 1)
-        step_y = randint(-1, 1)
+        step_x = randint(-1, 1)*self.speed
+        step_y = randint(-1, 1)*self.speed
         self.x += step_x
         self.y += step_y
 
@@ -35,6 +35,8 @@ while still_on:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             still_on = False
+        if event.type == pygame.MOUSEBUTTONUP:
+            pygame.image.save(display, "randomwalker_8way.png")
 
     walk.step()
     walk.draw()
