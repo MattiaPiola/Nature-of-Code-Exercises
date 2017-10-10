@@ -10,6 +10,9 @@ while still_on:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             still_on = False
+        if event.type == pygame.MOUSEBUTTONUP:
+            pygame.image.save(display, "screenshot.png")
+
 
     clock.tick(60)
     pygame.display.update()
