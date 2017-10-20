@@ -65,7 +65,7 @@ while still_on:
         if event.type == pygame.QUIT:
             still_on = False
         if event.type == pygame.MOUSEBUTTONUP:
-            ball = Ball(x = pygame.mouse.get_pos()[0], y = pygame.mouse.get_pos()[1], mass = randint(2,60),
+            ball = Ball(x = pygame.mouse.get_pos()[0], y = pygame.mouse.get_pos()[1], mass = randint(2,40),
                         velocity=[randint(1,10),0])
             balls.append(ball)
             # pygame.image.save(display, "screenshot.png")
@@ -82,13 +82,13 @@ while still_on:
                 friction_dir = np.divide(ball.velocity, np.linalg.norm(ball.velocity))
                 friction = friction_dir * friction_mag
                 ball.apply_force(friction)
-                print(np.linalg.norm(ball.velocity))
+
 
         ball.draw()
         ball.apply_force(gravity*ball.mass)
 
 
-    # clock.tick(60)
+    clock.tick(60)
     pygame.display.update()
 
 

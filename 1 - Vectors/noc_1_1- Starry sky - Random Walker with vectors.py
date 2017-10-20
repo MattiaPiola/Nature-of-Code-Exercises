@@ -9,18 +9,19 @@ clock = pygame.time.Clock()
 
 class Walker():
 
-    def __init__(self):
+    def __init__(self, color):
         self.pos = np.array([display.get_width()/2, display.get_height()/2])
-        self.speed = 70
+        self.speed = 120
         self.velocity = np.zeros(2)
+        self.color = color
 
     def draw(self):
-        pygame.draw.circle(display,(255,255,255),(self.pos.astype("int")), self.get_size())
+        pygame.draw.circle(display,self.color,(self.pos.astype("int")), self.get_size())
 
     def get_size(self):
-        size = np.random.random_integers(0,2)
+        size = np.random.random_integers(0,4)
         p = size
-        rand = np.random.random_integers(0,2)
+        rand = np.random.random_integers(0,4)
         if rand > p:
             return size
         else:
@@ -34,9 +35,16 @@ class Walker():
         if self.pos[0] < 0 or self.pos[0] > display.get_width() or self.pos[1] < 0 or self.pos[1] > display.get_height():
             self.pos = np.random.random_integers(0, display.get_width(), 2)
 
-walk = Walker()
+walkers =[]
+walk1 = Walker((195,170,130))
+walk2 = Walker((205,180,255))
+walk3 = Walker((255,255,255))
+walk4 = Walker((150,150,255))
+walkers.append(walk1)
+walkers.append(walk2)
+walkers.append(walk3)
+walkers.append(walk4)
 
-walk.draw()
 
 
 while still_on:
@@ -47,8 +55,9 @@ while still_on:
         if event.type == pygame.MOUSEBUTTONUP:
             pygame.image.save(display, "randomwalker_8way.png")
 
-    walk.check_boundaries()
-    walk.step()
-    walk.draw()
+    for walk in walkers:
+        walk.check_boundaries()
+        walk.step()
+        walk.draw()
     clock.tick(30)
     pygame.display.update()
