@@ -1,9 +1,12 @@
 import pygame
 
 pygame.init()
-display = pygame.display.set_mode((800, 600))
+disp_sizes = (800,600)
+display = pygame.display.set_mode(disp_sizes)
+pygame.display.set_caption("PYGAME")
 still_on = True
 clock = pygame.time.Clock()
+
 
 while still_on:
     # display.fill((0,0,0))
