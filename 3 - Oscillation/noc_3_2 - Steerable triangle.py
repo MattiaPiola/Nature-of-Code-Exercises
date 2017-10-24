@@ -32,13 +32,13 @@ class Rotator():
 
     def get_acc_vector(self):
         acc_vector = np.array([np.cos(self.angle), np.sin(self.angle)])
-        acc_vector = np.divide(acc_vector, np.linalg.norm(self.max_acceleration))
+        acc_vector = np.multiply(acc_vector, self.max_acceleration)
         return acc_vector
 
     def get_turn_vector(self, direction):
         turn_angle = self.angle + self.max_turn_angle*direction
         turn_vector = np.array([np.cos(turn_angle), np.sin(turn_angle)])
-        turn_vector = np.divide(turn_vector, np.linalg.norm(self.max_acceleration))
+        turn_vector = np.multiply(turn_vector, self.max_acceleration)
         return turn_vector
 
     def draw(self):
