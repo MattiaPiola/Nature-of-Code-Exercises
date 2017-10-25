@@ -3,7 +3,7 @@ import numpy as np
 from noise._perlin import noise1
 
 pygame.init()
-disp_sizes = (800,600)
+disp_sizes = (800, 600)
 display = pygame.display.set_mode(disp_sizes)
 pygame.display.set_caption("PYGAME")
 still_on = True
@@ -34,20 +34,21 @@ class Ball():
 
     def draw(self):
         wave_spacing = (disp_sizes[1] - self.y) / sea_drops
-        for i in range(sea_drops):
-            pygame.draw.circle(display, (0, 0, 155), (int(self.x), int(self.y+wave_spacing*i+1)), int(self.size))
+        for j in range(sea_drops):
+            pygame.draw.circle(display, (0, 0, 155), (int(self.x), int(self.y+wave_spacing*j+1)), int(self.size))
         pygame.draw.circle(display, color, (int(self.x), int(self.y)), int(self.size))
 
 
 wave = []
 
+
 for i in range(num+1):
-    b_x = spacing * (i)
+    b_x = spacing * i
     ball = Ball(b_x, disp_sizes[1]/2)
     wave.append(ball)
 
 while still_on:
-    display.fill((0,0,0))
+    display.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             still_on = False
