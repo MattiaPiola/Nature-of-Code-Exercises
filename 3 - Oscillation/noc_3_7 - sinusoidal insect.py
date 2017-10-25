@@ -6,10 +6,14 @@ import numpy as np
 pygame.init()
 disp_sizes = (1000,700)
 display = pygame.display.set_mode(disp_sizes)
-pygame.display.set_caption("PYGAME")
+pygame.display.set_caption("INSEEEECT")
 still_on = True
 clock = pygame.time.Clock()
+back_grass = []
 objs = []
+front_grass = []
+
+velocity = 10
 
 
 class Leg():
@@ -39,10 +43,9 @@ class Leg():
         pygame.draw.lines(display, self.color, False, (self.joint, self.knee+self.move, self.foot+self.move*2), 10)
 
 
-
 class Insect():
     def __init__(self):
-        self.pos = np.array((200,200))
+        self.pos = np.array(np.divide(disp_sizes, (4,3)), dtype= "int32")
         self.leg_joints = np.empty((2))
         for i in range(3):
             joint = np.array([self.pos +((i+1)*500/4, 100)])
@@ -81,6 +84,18 @@ class Insect():
             leg.draw()
 
 
+class Blade():
+	def __init__(self, x, y, l):
+		self.pos = np.array([x, y])
+		self.length = l
+
+	def update(self):
+		self.pos = np.add(self.pos, (-velocity, 0))
+
+	def draw(self):
+		pygame.draw.arc(display, (100, 200, 50), (self.pos, (10,self.length)), 0, np.pi, 5)
+
+
 ins = Insect()
 objs.append(ins)
 
@@ -92,8 +107,31 @@ while still_on:
         # if event.type == pygame.MOUSEBUTTONUP:
             # pygame.image.save(display, "screenshot.png")
 
+    blade_chance = 0.9
+    randnum = random()
+    if randnum < blade_chance:
+        r_len = np.random.randint(100, 500)
+        if randnum < blade_chance/2:
+            r_y = np.random.randint(0, disp_sizes[1]/3 + 150)
+            blade = Blade(disp_sizes[0]+50, r_y, r_len)
+            back_grass.append(blade)
+        elif randnum > blade_chance/2:
+            r_y = np.random.randint(disp_sizes[1]/3 + 250, disp_sizes[1] + 50)
+            blade = Blade(disp_sizes[0]+50, r_y, r_len)
+            front_grass.append(blade)
+
+
+    for blade in back_grass:
+    	blade.update()
+    	blade.draw()
+
     for obj in objs:
         obj.update()
         obj.draw()
+
+    for blade in front_grass:
+    	blade.update()
+    	blade.draw()
+
     clock.tick(60)
     pygame.display.update()
